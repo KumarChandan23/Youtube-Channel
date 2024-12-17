@@ -52,7 +52,7 @@ const userSchema = new Schema(
 
 userSchema.pre("save", async function(next){
     if(!this.isModified("password")) next();  // if password is not changed or touched then do not re save it agian
-        this.password = bcrypt.hash(this.password, 10)
+        this.password = await bcrypt.hash(this.password, 10)
         next();
 })
 
@@ -64,13 +64,13 @@ userSchema.methods.generateAccessToken = function(){
    return jwt.sign(
         {
             _id: this._id,
-            emial: this.email,
+            email: this.email,
             username: this.username,
             fullname: this.fullname
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
-           expiresIn:process.evn.ACCESS_TOKEN_EXPIRY
+           expiresIn:process.env.ACCESS_TOKEN_EXPIRY
         }
     )
 }
