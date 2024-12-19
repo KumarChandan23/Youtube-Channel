@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 
 const userSchema = new Schema(
     {
-        username:{
+        userName:{
             type:String, 
             required:true,
             unique: true,
@@ -19,7 +19,7 @@ const userSchema = new Schema(
             lowercase: true,
             trim: true,
         },
-        fullname:{
+        fullName:{
             type:String, 
             required:true,
             lowercase: true,
@@ -27,13 +27,13 @@ const userSchema = new Schema(
             index: true
         },
         avatar:{
-            type:String, // cloudnary url 
+            type:String, 
             required:true,
         },
-        coverimage:{
+        coverImage:{
             type:String, 
         },
-        watchistory:[{
+        watcHistory:[{
             type:Schema.Types.ObjectId,
             ref:"Video"
         }],
@@ -41,7 +41,7 @@ const userSchema = new Schema(
             type:String,
             required: [true, "Password is required"]
         },
-        refreshtoken:{
+        refreshToken:{
                 type:String
         }
     },
@@ -65,8 +65,8 @@ userSchema.methods.generateAccessToken = function(){
         {
             _id: this._id,
             email: this.email,
-            username: this.username,
-            fullname: this.fullname
+            userName: this.userName,
+            fullName: this.fullName
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
@@ -86,4 +86,4 @@ userSchema.methods.generateRefreshToken = function(){
     )
 }
 
-export const User = mongoose.model('User', userSchema)
+export const User = mongoose.model('User', userSchema,)
